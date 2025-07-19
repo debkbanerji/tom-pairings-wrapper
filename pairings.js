@@ -44,6 +44,14 @@ function extractPairingsAndPopulatePage() {
                     headingText.innerText = pairingHeader.innerText;
                 }
 
+                let rosterMode = false;
+                // if an h3 elements contains the word 'Roster', then we're in roster mode
+                const rosterHeader = Array.from(doc.querySelectorAll("h3")).find(h3 => h3.innerText.toLowerCase().includes("roster"));
+                if (rosterHeader) {
+                    rosterMode = true;
+                    headingText.innerText = rosterHeader.innerText;
+                }
+                document.getElementById("roster-mode-text").hidden = !rosterMode;
 
                 // extract each division's tables
                 const rawTables = doc.querySelectorAll("table");
@@ -55,7 +63,7 @@ function extractPairingsAndPopulatePage() {
                 // now, find the division names
                 // These are in h3 tags, and contain 'Division' in the text
                 const divisionHeaders = Array.from(doc.querySelectorAll("h3"))
-                    .map(h3 => h3.innerText).filter((text) =>
+                    .map(h3 => h3.innerText.replace('--', '-')).filter((text) =>
                         text.toLowerCase().includes("division")
                     );
 
@@ -91,7 +99,7 @@ function extractPairingsAndPopulatePage() {
                     table.classList.add("pairings-table");
                     const thead = document.createElement("thead");
                     const headerRow = document.createElement("tr");
-                    ["Table", "Player 1", "Player 2"].forEach((col) => {
+                    (rosterMode ? ["Player"] : ["Table", "Player 1", "Player 2"]).forEach((col) => {
                         const th = document.createElement("th");
                         th.innerText = col;
                         headerRow.appendChild(th);
@@ -101,9 +109,11 @@ function extractPairingsAndPopulatePage() {
                     const tbody = document.createElement("tbody");
                     division.pairings.forEach((pairing) => {
                         const row = document.createElement("tr");
-                        const tableCell = document.createElement("td");
-                        tableCell.innerText = pairing["Table"] || "";
-                        row.appendChild(tableCell);
+                        if (!rosterMode) {
+                            const tableCell = document.createElement("td");
+                            tableCell.innerText = pairing["Table"] || "";
+                            row.appendChild(tableCell);
+                        }
                         const nameCell = document.createElement("td");
                         nameCell.classList.add("player-name-cell");
                         const nameContainer = document.createElement("div");
@@ -129,31 +139,33 @@ function extractPairingsAndPopulatePage() {
                             nameContainer.appendChild(recPill);
                         }
                         row.appendChild(nameCell);
+                        if (!rosterMode) {
 
-                        const opponentCell = document.createElement("td");
+                            const opponentCell = document.createElement("td");
 
-                        const opponentContainer = document.createElement("div");
-                        opponentContainer.classList.add("player-name-container");
-                        opponentCell.appendChild(opponentContainer);
-                        const opponentText = document.createElement("span");
-                        opponentText.classList.add("player-name");
-                        opponentText.innerText = pairing["Opponent"] || "";
-                        opponentContainer.appendChild(opponentText);
-                        // if the pairing has a record, add it in a pill next to the name
-                        if (pairing["opponentRecord"]) {
-                            const rec = pairing["opponentRecord"];
+                            const opponentContainer = document.createElement("div");
+                            opponentContainer.classList.add("player-name-container");
+                            opponentCell.appendChild(opponentContainer);
+                            const opponentText = document.createElement("span");
+                            opponentText.classList.add("player-name");
+                            opponentText.innerText = pairing["Opponent"] || "";
+                            opponentContainer.appendChild(opponentText);
+                            // if the pairing has a record, add it in a pill next to the name
+                            if (pairing["opponentRecord"]) {
+                                const rec = pairing["opponentRecord"];
 
-                            // Wrap the win number in a span and set font weight based on wins
-                            // const winWeight = Math.min(900, 450 + (rec.wins || 0) * 50);
-                            // uncomment the above line and comment the below line for dynamic win font weight
-                            const winWeight = 'normal';
-                            const recStr = ` <span class="win-count" style="font-weight: ${winWeight}">${rec.wins || 0}</span>/${rec.losses || 0}/${rec.ties || 0}`;
-                            const recPill = document.createElement("div");
-                            recPill.innerHTML = recStr;
-                            recPill.classList.add("record-pill");
-                            opponentContainer.appendChild(recPill);
+                                // Wrap the win number in a span and set font weight based on wins
+                                // const winWeight = Math.min(900, 450 + (rec.wins || 0) * 50);
+                                // uncomment the above line and comment the below line for dynamic win font weight
+                                const winWeight = 'normal';
+                                const recStr = ` <span class="win-count" style="font-weight: ${winWeight}">${rec.wins || 0}</span>/${rec.losses || 0}/${rec.ties || 0}`;
+                                const recPill = document.createElement("div");
+                                recPill.innerHTML = recStr;
+                                recPill.classList.add("record-pill");
+                                opponentContainer.appendChild(recPill);
+                            }
+                            row.appendChild(opponentCell);
                         }
-                        row.appendChild(opponentCell);
 
                         tbody.appendChild(row);
                     });
