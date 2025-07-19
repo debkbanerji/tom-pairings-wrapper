@@ -1,5 +1,11 @@
 body {
     font-family: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+
+  font-family: "Roboto", sans-serif;
+  font-optical-sizing: auto;
+  /* font-weight: <weight>; */
+  font-style: normal;
+  font-variation-settings:    "wdth" 100;
 }
 
 #header {
@@ -44,4 +50,74 @@ body {
     text-align: center;
     margin-top: 0.5em;
     margin-bottom: 0.5em;
+}
+
+.division {
+    margin-bottom: 25px;
+}
+
+table {
+	box-shadow: 0 0 20px 0 rgba(0, 0, 0, .15);
+    width: 100%;
+	border-collapse: separate;
+	border: solid #b3b3b3 1px;
+	border-radius: 6px;
+	border-spacing: 0px;
+}
+
+th,
+td {
+	border: 0 none;
+}
+
+th {
+	font-size: 15px;
+	color: #fa4251;
+	background-color: white !important;
+	border-bottom: 1px solid #cccccc;
+	padding: 14px 15px;
+    text-align: left;
+}
+
+td {
+	font-size: 15px;
+	color: gray;
+	line-height: 1.5;
+	padding: 5px 15px;
+}
+
+tbody tr:nth-child(odd) {
+  background-color: #f5f5f5
+}
+
+table>tbody>tr {
+	border-bottom: 1px solid #cccccc;
+}
+
+table>tbody>tr:last-child>td {
+	border-bottom: 2px solid #b3b3b3;
+}
+
+table>tbody>tr>td {
+	border-bottom: 1px solid #ccccccbb;
+}
+
+table>tbody>tr:last-child>td {
+	border-bottom: thin #ccccccbb;
+}
+
+table th:first-of-type {
+	border-top-left-radius: 6px;
+}
+
+table th:last-of-type {
+	border-top-right-radius: 6px;
+}
+
+table tr:last-child td:first-child {
+	border-bottom-left-radius: 5px;
+}
+
+table tr:last-child td:last-child {
+	border-bottom-right-radius: 5px;
 }
