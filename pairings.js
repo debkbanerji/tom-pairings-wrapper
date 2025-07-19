@@ -63,7 +63,7 @@ function extractPairingsAndPopulatePage() {
                 // now, find the division names
                 // These are in h3 tags, and contain 'Division' in the text
                 const divisionHeaders = Array.from(doc.querySelectorAll("h3"))
-                    .map(h3 => h3.innerText.replace('--', '-')).filter((text) =>
+                    .map(h3 => h3.innerText.replace('--', '-').replace("ivisions", "ivision")).filter((text) =>
                         text.toLowerCase().includes("division")
                     );
 
