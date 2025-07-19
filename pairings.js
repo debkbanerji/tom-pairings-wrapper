@@ -83,10 +83,27 @@ function extractPairingsAndPopulatePage() {
                         tableCell.innerText = pairing["Table"] || "";
                         row.appendChild(tableCell);
                         const nameCell = document.createElement("td");
-                        nameCell.innerText = pairing["Name"] || "";
+                        nameCell.classList.add("player-name-cell");
+                        const nameContainer = document.createElement("div");
+                        nameContainer.classList.add("player-name-container");
+                        nameCell.appendChild(nameContainer);
+                        const nameText = document.createElement("span");
+                        nameText.classList.add("player-name");
+                        nameText.innerText = pairing["Name"] || "";
+                        nameContainer.appendChild(nameText);
+                        // if the pairing has a record, add it in a pill next to the name
+                        if (pairing["record"]) {
+                            const rec = pairing["record"];
+                            const recStr = ` (${rec.wins || 0}/${rec.losses || 0}/${rec.ties || 0})`;
+                            const recPill = document.createElement("div");
+                            recPill.innerText = recStr;
+                            recPill.classList.add("record-pill");
+                            nameContainer.appendChild(recPill);
+                        }
                         row.appendChild(nameCell);
                         const opponentCell = document.createElement("td");
                         opponentCell.innerText = pairing["Opponent"] || "";
+                        opponentCell.classList.add("opponent-name");
                         row.appendChild(opponentCell);
                         tbody.appendChild(row);
                     });
