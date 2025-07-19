@@ -3,6 +3,9 @@ Static pairings wrapper for TOM - aims to improve the user experience of pairing
 
 This documentation assumes you know how to host a static site
 
+## Warning
+**Please be careful!** As of the time of writing, this is the product of just a few hours of eng time and no user testing. If you do decide to use this anyway, let me know about any bugs you may find. I'll remove this warning once I've had a time to test this properly.
+
 ## How to use
 
 - Copy all of the files in the repo into the folder where you're hosting your static assets (you can leave out `README.md` and `logo.png`)
