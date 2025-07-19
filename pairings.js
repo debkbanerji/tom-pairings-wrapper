@@ -1,6 +1,7 @@
 // Extracts the pairings from the pairings.html file, and repackages them into the fancier pairings.html
 function extractPairingsAndPopulatePage() {
-    fetch("pairings-data/index.html")
+    const cacheBuster = `cb=${Date.now()}`;
+    fetch(`pairings-data/index.html?${cacheBuster}`)
         .then((response) => response.text())
         .then((html) => {
             try {
@@ -146,6 +147,18 @@ function extractPairingsAndPopulatePage() {
                     divisionElements.forEach((div) => pairingTablesContainer.appendChild(div));
                 }
 
+                const reloadButton = document.createElement("button");
+                reloadButton.classList.add("reload-button");
+                reloadButton.innerHTML = "&#x21bb;";
+                divisionsShortcutButtonsContainer.appendChild(reloadButton);
+                reloadButton.onclick = () => {
+                    reloadButton.disabled = true;
+                    reloadButton.innerText = "Refreshing...";
+                    // remove the hash from the url
+                    history.replaceState(null, null, window.location.pathname + window.location.search);
+                    extractPairingsAndPopulatePage();
+                }
+
             } catch (error) {
                 console.error("Error unpacking pairings:", error);
                 document.getElementById("root").innerHTML = html;
@@ -174,17 +187,21 @@ function pairingsTableToJSON(table) {
             const match = rawText.match(/^(.*?)(?:\s*\((\d+)\/(\d+)\/(\d+)\s*\((\d+)\)\))?$/);
             if (match) {
                 value = match[1].trim();
-                recordData = {};
-                if (match[2] !== undefined) recordData["wins"] = parseInt(match[2], 10);
-                if (match[3] !== undefined) recordData["losses"] = parseInt(match[3], 10);
-                if (match[4] !== undefined) recordData["ties"] = parseInt(match[4], 10);
-                if (match[5] !== undefined) recordData["points"] = parseInt(match[5], 10);
+                if (headers[index].toLowerCase().trim() === "name") {
+                    recordData = {};
+                    if (match[2] !== undefined) recordData["wins"] = parseInt(match[2], 10);
+                    if (match[3] !== undefined) recordData["losses"] = parseInt(match[3], 10);
+                    if (match[4] !== undefined) recordData["ties"] = parseInt(match[4], 10);
+                    if (match[5] !== undefined) recordData["points"] = parseInt(match[5], 10);
+                }
             } else {
                 value = rawText; // fallback to just the raw text
             }
 
             obj[headers[index]] = value;
-            obj["record"] = recordData;
+            if (obj["record"] == null) {
+                obj["record"] = recordData;
+            }
         });
         return obj;
     });
