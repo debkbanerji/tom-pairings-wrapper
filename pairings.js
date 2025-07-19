@@ -7,7 +7,7 @@ function extractPairingsAndPopulatePage() {
             try {
                 const headingText = document.getElementById("heading-text");
                 headingText.innerText = "Pairings";
-                const tablesContainer = document.getElementById("pairings-tables-containter");
+                const tablesContainer = document.getElementById("pairings-tables-container");
                 tablesContainer.innerHTML = "";
                 const eventNameContainer = document.getElementById("event-name");
                 eventNameContainer.innerHTML = ""
@@ -17,7 +17,7 @@ function extractPairingsAndPopulatePage() {
                 pageRefreshedTimeContainer.innerHTML = "";
                 const divisionsShortcutButtonsContainer = document.getElementById("divisions-shortcut-buttons-container");
                 divisionsShortcutButtonsContainer.innerHTML = "";
-                const pairingTablesContainer = document.getElementById("pairings-tables-containter");
+                const pairingTablesContainer = document.getElementById("pairings-tables-container");
                 pairingTablesContainer.innerHTML = "";
                 const now = new Date();
                 // match the page refreshed time format to the created on time format: 07/12/2025 15:18:22
@@ -172,9 +172,7 @@ function extractPairingsAndPopulatePage() {
                 });
 
                 if (divisionElements.length === 0) {
-                    const noPairingsMessage = document.createElement("p");
-                    noPairingsMessage.innerText = "No pairings available.";
-                    pairingTablesContainer.appendChild(noPairingsMessage);
+                    pairingTablesContainer.innerHTML = "No pairings found."
                 } else {
                     divisionElements.forEach((div) => pairingTablesContainer.appendChild(div));
                 }

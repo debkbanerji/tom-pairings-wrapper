@@ -35,6 +35,11 @@ a {
     font-weight: bold;
 }
 
+#pairings-tables-container {
+    text-align: center;
+    margin-bottom: 4px;
+}
+
 #event-name>h2 {
     display: flex;
     justify-content: center;
