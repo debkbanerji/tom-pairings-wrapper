@@ -71,6 +71,8 @@ function extractPairingsAndPopulatePage() {
                     shortcutButton.classList.add("division-shortcut-button");
                     shortcutButton.onclick = () => {
                         divisionHeader.scrollIntoView({ behavior: "smooth", block: "start" });
+                        // use '#' + division.name as id to update the url hash
+                        history.replaceState(null, null, '#' + division.name.replace(/\s+/g, '-').toLowerCase());
                     };
                     divisionsShortcutButtonsContainer.appendChild(shortcutButton);
 
@@ -124,6 +126,15 @@ function extractPairingsAndPopulatePage() {
                     });
                     table.appendChild(tbody);
                     divisionDiv.appendChild(table);
+                    // Scroll to the hash if present
+                    setTimeout(() => {
+                        if (window.location.hash) {
+                            const hash = window.location.hash.substring(1);
+                            if (division.name.replace(/\s+/g, '-').toLowerCase() === hash) {
+                                divisionHeader.scrollIntoView({ behavior: "smooth", block: "start" });
+                            }
+                        }
+                    }, 100);
                     return divisionDiv;
                 });
 
