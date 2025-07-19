@@ -225,13 +225,10 @@ function pairingsTableToJSON(table) {
             } else {
                 value = rawText; // fallback to just the raw text
             }
-            console.log(headers[index])
-            console.log(recordData)
             obj[headers[index]] = value;
             if (headers[index].toLowerCase().trim() === "name" && recordData) {
                 obj["playerRecord"] = recordData;
             } else if (headers[index].toLowerCase().trim() === "opponent" && recordData) {
-                console.log("Found opponent record data for", value, recordData);
                 obj["opponentRecord"] = recordData;
             }
         });
