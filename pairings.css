@@ -2,8 +2,40 @@ body {
     font-family: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
 
-#header>h1 {
+#header {
     display: flex;
     justify-content: center;
     text-align: center;
+}
+
+#header>h1 {
+    margin-top: 0.5;
+    margin-bottom: 0;
+}
+
+#event-name>h2 {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    font-weight: normal;
+}
+
+
+#created-on-time,
+#page-refreshed-time {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    font-size: small;
+    margin-bottom: 0;
+}
+
+#created-on-time>h3,
+#page-refreshed-time>h3 {
+    margin-top: 0;
+    margin-bottom: 0.5em;
+    color: darkgray;
+    font-weight: normal;
 }
