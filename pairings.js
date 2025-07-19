@@ -109,11 +109,12 @@ function extractPairingsAndPopulatePage() {
                         nameCell.appendChild(nameContainer);
                         const nameText = document.createElement("span");
                         nameText.classList.add("player-name");
+                        nameText.classList.add("player-name-left");
                         nameText.innerText = pairing["Name"] || "";
                         nameContainer.appendChild(nameText);
                         // if the pairing has a record, add it in a pill next to the name
-                        if (pairing["record"]) {
-                            const rec = pairing["record"];
+                        if (pairing["playerRecord"]) {
+                            const rec = pairing["playerRecord"];
 
                             // Wrap the win number in a span and set font weight based on wins
                             // const winWeight = Math.min(900, 450 + (rec.wins || 0) * 50);
@@ -126,10 +127,32 @@ function extractPairingsAndPopulatePage() {
                             nameContainer.appendChild(recPill);
                         }
                         row.appendChild(nameCell);
+
                         const opponentCell = document.createElement("td");
-                        opponentCell.innerText = pairing["Opponent"] || "";
-                        opponentCell.classList.add("opponent-name");
+
+                        const opponentContainer = document.createElement("div");
+                        opponentContainer.classList.add("player-name-container");
+                        opponentCell.appendChild(opponentContainer);
+                        const opponentText = document.createElement("span");
+                        opponentText.classList.add("player-name");
+                        opponentText.innerText = pairing["Opponent"] || "";
+                        opponentContainer.appendChild(opponentText);
+                        // if the pairing has a record, add it in a pill next to the name
+                        if (pairing["opponentRecord"]) {
+                            const rec = pairing["opponentRecord"];
+
+                            // Wrap the win number in a span and set font weight based on wins
+                            // const winWeight = Math.min(900, 450 + (rec.wins || 0) * 50);
+                            // uncomment the above line and comment the below line for dynamic win font weight
+                            const winWeight = 'normal';
+                            const recStr = ` (<span class="win-count" style="font-weight: ${winWeight}">${rec.wins || 0}</span>/${rec.losses || 0}/${rec.ties || 0})`;
+                            const recPill = document.createElement("div");
+                            recPill.innerHTML = recStr;
+                            recPill.classList.add("record-pill");
+                            opponentContainer.appendChild(recPill);
+                        }
                         row.appendChild(opponentCell);
+
                         tbody.appendChild(row);
                     });
                     table.appendChild(tbody);
@@ -194,20 +217,22 @@ function pairingsTableToJSON(table) {
             const match = rawText.match(/^(.*?)(?:\s*\((\d+)\/(\d+)\/(\d+)\s*\((\d+)\)\))?$/);
             if (match) {
                 value = match[1].trim();
-                if (headers[index].toLowerCase().trim() === "name") {
-                    recordData = {};
-                    if (match[2] !== undefined) recordData["wins"] = parseInt(match[2], 10);
-                    if (match[3] !== undefined) recordData["losses"] = parseInt(match[3], 10);
-                    if (match[4] !== undefined) recordData["ties"] = parseInt(match[4], 10);
-                    if (match[5] !== undefined) recordData["points"] = parseInt(match[5], 10);
-                }
+                recordData = {};
+                if (match[2] !== undefined) recordData["wins"] = parseInt(match[2], 10);
+                if (match[3] !== undefined) recordData["losses"] = parseInt(match[3], 10);
+                if (match[4] !== undefined) recordData["ties"] = parseInt(match[4], 10);
+                if (match[5] !== undefined) recordData["points"] = parseInt(match[5], 10);
             } else {
                 value = rawText; // fallback to just the raw text
             }
-
+            console.log(headers[index])
+            console.log(recordData)
             obj[headers[index]] = value;
-            if (obj["record"] == null) {
-                obj["record"] = recordData;
+            if (headers[index].toLowerCase().trim() === "name" && recordData) {
+                obj["playerRecord"] = recordData;
+            } else if (headers[index].toLowerCase().trim() === "opponent" && recordData) {
+                console.log("Found opponent record data for", value, recordData);
+                obj["opponentRecord"] = recordData;
             }
         });
         return obj;

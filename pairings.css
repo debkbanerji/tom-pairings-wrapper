@@ -114,23 +114,15 @@ body {
     white-space: nowrap;
     overflow: hidden;
     flex-grow: 0;
-    max-width: 27vw;
+    max-width: 26vw;
 }
 
-.player-name::first-letter {
+.player-name-left::first-letter {
     font-weight: 550;
 }
 
 .win-count {
     /* color: rgb(55, 87, 55); */
-}
-
-.opponent-name {
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-    max-width: 27vw;
-    border-left: 1px solid #ddd;
 }
 
 .record-pill {
@@ -156,6 +148,7 @@ table {
 th,
 td {
     border: 0 none;
+    padding: 5px 5px
 }
 
 th {
@@ -163,7 +156,7 @@ th {
     color: #fa4251;
     background-color: white !important;
     border-bottom: 1px solid #cccccc;
-    padding: 14px 15px;
+    padding: 14px 5px;
     text-align: left;
 }
 
@@ -171,8 +164,15 @@ td {
     font-size: 15px;
     color: gray;
     line-height: 1.5;
-    padding: 5px 15px;
     max-width: 50%;
+}
+
+tbody td:nth-child(3) {
+    border-left: 1px solid #ccccccbb;
+}
+
+tbody td:nth-child(2) {
+    border-left: 1px solid #ccccccbb;
 }
 
 tbody tr:nth-child(odd) {
@@ -201,11 +201,15 @@ table th:first-of-type {
 
 table td:first-of-type,
 table th:first-of-type {
-    padding-right: 0;
+    padding-right: 4px;
 }
 
 table th:last-of-type {
     border-top-right-radius: 6px;
+}
+
+thead th {
+    border-left: 1px solid #ccccccbb;
 }
 
 table tr:last-child td:first-child {
