@@ -120,7 +120,7 @@ function extractPairingsAndPopulatePage() {
                             // const winWeight = Math.min(900, 450 + (rec.wins || 0) * 50);
                             // uncomment the above line and comment the below line for dynamic win font weight
                             const winWeight = 'normal';
-                            const recStr = ` (<span class="win-count" style="font-weight: ${winWeight}">${rec.wins || 0}</span>/${rec.losses || 0}/${rec.ties || 0})`;
+                            const recStr = ` <span class="win-count" style="font-weight: ${winWeight}">${rec.wins || 0}</span>/${rec.losses || 0}/${rec.ties || 0}`;
                             const recPill = document.createElement("div");
                             recPill.innerHTML = recStr;
                             recPill.classList.add("record-pill");
@@ -145,7 +145,7 @@ function extractPairingsAndPopulatePage() {
                             // const winWeight = Math.min(900, 450 + (rec.wins || 0) * 50);
                             // uncomment the above line and comment the below line for dynamic win font weight
                             const winWeight = 'normal';
-                            const recStr = ` (<span class="win-count" style="font-weight: ${winWeight}">${rec.wins || 0}</span>/${rec.losses || 0}/${rec.ties || 0})`;
+                            const recStr = ` <span class="win-count" style="font-weight: ${winWeight}">${rec.wins || 0}</span>/${rec.losses || 0}/${rec.ties || 0}`;
                             const recPill = document.createElement("div");
                             recPill.innerHTML = recStr;
                             recPill.classList.add("record-pill");
@@ -183,7 +183,7 @@ function extractPairingsAndPopulatePage() {
                 divisionsShortcutButtonsContainer.appendChild(reloadButton);
                 reloadButton.onclick = () => {
                     reloadButton.disabled = true;
-                    reloadButton.innerText = "Refreshing...";
+                    reloadButton.innerText = "...";
                     // remove the hash from the url
                     history.replaceState(null, null, window.location.pathname + window.location.search);
                     extractPairingsAndPopulatePage();

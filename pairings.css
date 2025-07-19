@@ -114,11 +114,11 @@ body {
     white-space: nowrap;
     overflow: hidden;
     flex-grow: 0;
-    max-width: 26vw;
+    max-width: 29vw;
 }
 
 .player-name-left::first-letter {
-    font-weight: 550;
+    /* font-weight: 550; */
 }
 
 .win-count {
@@ -130,7 +130,7 @@ body {
     color: rgb(143, 143, 143);
     background-color: #ededed;
     border-radius: 12px;
-    padding: 2px 8px;
+    padding: 1px 4px;
     margin-left: 6px;
     font-weight: normal;
     white-space: nowrap;
