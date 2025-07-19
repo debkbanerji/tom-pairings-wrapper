@@ -5,8 +5,8 @@ function extractPairingsAndPopulatePage() {
         .then((response) => response.text())
         .then((html) => {
             try {
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(html, "text/html");
+                const headingText = document.getElementById("heading-text");
+                headingText.innerText = "Pairings";
                 const tablesContainer = document.getElementById("pairings-tables-containter");
                 tablesContainer.innerHTML = "";
                 const eventNameContainer = document.getElementById("event-name");
@@ -24,6 +24,9 @@ function extractPairingsAndPopulatePage() {
                 const formattedNow = now.toLocaleDateString("en-US") + " " + now.toLocaleTimeString("en-GB", { hour12: false });
                 pageRefreshedTimeContainer.innerHTML = `<h3>Last refreshed on ${formattedNow}</h3>`;
 
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, "text/html");
+
                 // the 'footers' are td elements with class 'footer'
                 const rawFooterData = Array.from(doc.querySelectorAll("td.footer")).map(td => td.innerText.trim());
 
@@ -38,7 +41,6 @@ function extractPairingsAndPopulatePage() {
                 // top level pairing text is in an h3, in the format 'Pairings - Round 4'
                 const pairingHeader = Array.from(doc.querySelectorAll("h3")).find(h3 => h3.innerText.toLowerCase().includes("pairings"));
                 if (pairingHeader) {
-                    const headingText = document.getElementById("heading-text");
                     headingText.innerText = pairingHeader.innerText;
                 }
 
@@ -214,7 +216,8 @@ function pairingsTableToJSON(table) {
             // name (wins/losses/ties (points))
             // use a regex to extract the win, loss, draw, and points values if they're present:
             let recordData = null;
-            const match = rawText.match(/^(.*?)(?:\s*\((\d+)\/(\d+)\/(\d+)\s*\((\d+)\)\))?$/);
+            // TODO: Take care of the ' - MA' at the end for mixed divisions
+            const match = rawText.match(/^(.*?)(?:\s*\((\d+)\/(\d+)\/(\d+)\s*\((\d+)\).*\))?$/);
             if (match) {
                 value = match[1].trim();
                 recordData = {};

@@ -8,6 +8,15 @@ body {
     font-variation-settings: "wdth" 100;
 }
 
+#fallback {
+    font-size: small;
+}
+
+a {
+    color: #fa4251;
+    text-decoration: none;
+}
+
 #header {
     margin-top: 20px;
     display: flex;
