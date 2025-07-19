@@ -14,7 +14,8 @@ function extractPairingsAndPopulatePage() {
                 createdOnTimeContainer.innerHTML = "";
                 const pageRefreshedTimeContainer = document.getElementById("page-refreshed-time");
                 pageRefreshedTimeContainer.innerHTML = "";
-
+                const divisionsShortcutButtonsContainer = document.getElementById("divisions-shortcut-buttons-container");
+                divisionsShortcutButtonsContainer.innerHTML = "";
                 const pairingTablesContainer = document.getElementById("pairings-tables-containter");
                 pairingTablesContainer.innerHTML = "";
                 const now = new Date();
@@ -63,6 +64,15 @@ function extractPairingsAndPopulatePage() {
                     const divisionHeader = document.createElement("h2");
                     divisionHeader.innerText = division.name;
                     divisionDiv.appendChild(divisionHeader);
+
+                    // add a shortcut button to the divisions shortcut buttons container
+                    const shortcutButton = document.createElement("button");
+                    shortcutButton.innerText = division.name.replace("Division", "").trim();
+                    shortcutButton.classList.add("division-shortcut-button");
+                    shortcutButton.onclick = () => {
+                        divisionHeader.scrollIntoView({ behavior: "smooth", block: "start" });
+                    };
+                    divisionsShortcutButtonsContainer.appendChild(shortcutButton);
 
                     // The table should have the columns 'Table', 'Name', and 'Opponent'
                     const table = document.createElement("table");

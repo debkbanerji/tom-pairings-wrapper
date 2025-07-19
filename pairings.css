@@ -46,6 +46,47 @@ body {
     font-weight: normal;
 }
 
+#divisions-shortcut-buttons-container {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.division-shortcut-button {
+    margin-left: 5px;
+    margin-right: 5px;
+    background: #fff;
+    color: #fa4251;
+    border: 1px solid #f7b3b8;
+    border-radius: 4px;
+    padding: 8px 20px;
+    font-size: 1em;
+    font-weight: 500;
+    box-shadow: 0 2px 4px rgba(250, 66, 81, 0.08), 0 1.5px 6px rgba(0, 0, 0, 0.08);
+    cursor: pointer;
+    transition: color 0.2s, background 0.2s, box-shadow 0.2s, transform 0.1s, border-color 0.2s;
+
+    &:hover,
+    &:focus {
+        background: #fde3e5;
+        color: #e51e3a;
+        border-color: #f9909c;
+        box-shadow: 0 4px 12px rgba(250, 66, 81, 0.12), 0 3px 10px rgba(0, 0, 0, 0.12);
+        outline: none;
+    }
+
+    &:active {
+        background: #fbbbc3;
+        color: #c0152a;
+        border-color: #f6647a;
+        box-shadow: 0 1px 3px rgba(250, 66, 81, 0.10), 0 1px 4px rgba(0, 0, 0, 0.08);
+    }
+}
+
 .division>h2 {
     text-align: center;
     margin-top: 0.5em;
@@ -91,7 +132,6 @@ body {
     max-width: 27vw;
     border-left: 1px solid #ddd;
 }
-
 
 .record-pill {
     font-size: 0.8em;
