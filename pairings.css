@@ -39,3 +39,9 @@ body {
     color: darkgray;
     font-weight: normal;
 }
+
+.division>h2 {
+    text-align: center;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+}
