@@ -76,6 +76,14 @@ body {
     max-width: 27vw;
 }
 
+.player-name::first-letter {
+    font-weight: 550;
+}
+
+.win-count {
+    /* color: rgb(55, 87, 55); */
+}
+
 .opponent-name {
     text-overflow: ellipsis;
     white-space: nowrap;
