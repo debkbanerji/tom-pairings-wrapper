@@ -216,8 +216,9 @@ function pairingsTableToJSON(table) {
             // name (wins/losses/ties (points))
             // use a regex to extract the win, loss, draw, and points values if they're present:
             let recordData = null;
-            // TODO: Take care of the ' - MA' at the end for mixed divisions
-            const match = rawText.match(/^(.*?)(?:\s*\((\d+)\/(\d+)\/(\d+)\s*\((\d+)\).*\))?$/);
+            // TODO: Take care of the ' - SR' at the end for mixed divisions
+            // TODO: Take care of the * at the end for tardiness
+            const match = rawText.match(/^(.*?)(?:\s*\((\d+)\/(\d+)\/(\d+)\s*\((\d+)\).*\)).*?$/);
             if (match) {
                 value = match[1].trim();
                 recordData = {};
