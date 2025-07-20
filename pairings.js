@@ -78,10 +78,10 @@ function extractPairingsAndPopulatePage() {
                     const divisionName = divisionHeaders[i] || `Division ${i + 1}`;
                     const table = parsedTables[i] || [];
                     // sort the table by pinned player first, then by name
-                    const pinnedPlayerLower = (pinnedPlayer ?? '').toLowerCase();
+                    const pinnedPlayerLower = (pinnedPlayer ?? '').toLowerCase().replace(/\s+/g, '');
                     table.sort((a, b) => {
-                        const aIsPinned = a["Name"].toLowerCase().includes(pinnedPlayerLower);
-                        const bIsPinned = b["Name"].toLowerCase().includes(pinnedPlayerLower);
+                        const aIsPinned = a["Name"].toLowerCase().replace(/\s+/g, '') === (pinnedPlayerLower);
+                        const bIsPinned = b["Name"].toLowerCase().replace(/\s+/g, '') === (pinnedPlayerLower);
                         if (aIsPinned && !bIsPinned) return -1;
                         if (!aIsPinned && bIsPinned) return 1;
                         // if both are pinned or both are not pinned, sort by name
@@ -116,7 +116,7 @@ function extractPairingsAndPopulatePage() {
                     shortcutButton.innerText = division.name.replace("Division", "").trim();
                     shortcutButton.classList.add("division-shortcut-button");
                     shortcutButton.onclick = () => {
-                        divisionHeader.scrollIntoView({ behavior: "smooth", block: "start" });
+                        divisionDiv.scrollIntoView({ behavior: "smooth", block: "start" });
                         // use '#' + division.name as id to update the url hash
                         history.replaceState(null, null, '#' + division.name.replace(/\s+/g, '-').toLowerCase());
                     };
@@ -138,7 +138,8 @@ function extractPairingsAndPopulatePage() {
                     division.pairings.forEach((pairing) => {
                         const row = document.createElement("tr");
                         // if the pairing has a 'Name' that matches the pinned player, highlight the row
-                        if (pairing["Name"].toLowerCase().includes((pinnedPlayer ?? '').toLowerCase())) {
+                        const isPinned = pairing["Name"].toLowerCase().replace(/\s+/g, '') === ((pinnedPlayer ?? '').toLowerCase().replace(/\s+/g, ''));
+                        if (isPinned) {
                             row.classList.add("highlighted-row");
                         }
                         if (!rosterMode) {
@@ -150,6 +151,21 @@ function extractPairingsAndPopulatePage() {
                         nameCell.classList.add("player-name-cell");
                         const nameContainer = document.createElement("div");
                         nameContainer.classList.add("player-name-container");
+                        const pinButton = document.createElement("button");
+                        pinButton.classList.add("pin-button");
+                        pinButton.innerHTML = "&#128204;"
+                        pinButton.onclick = (e) => {
+                            const playerName = pairing["Name"] || "";
+                            const url = new URL(window.location.href);
+                            if (isPinned) {
+                                url.searchParams.delete("player");
+                            } else {
+                                url.searchParams.set("player", playerName);
+                            }
+                            history.replaceState(null, null, url.pathname + url.search + '#' + division.name.replace(/\s+/g, '-').toLowerCase());
+                            extractPairingsAndPopulatePage();
+                        };
+                        nameContainer.appendChild(pinButton);
                         nameCell.appendChild(nameContainer);
                         const nameText = document.createElement("span");
                         nameText.classList.add("player-name");
@@ -208,7 +224,7 @@ function extractPairingsAndPopulatePage() {
                         if (window.location.hash) {
                             const hash = window.location.hash.substring(1);
                             if (division.name.replace(/\s+/g, '-').toLowerCase() === hash) {
-                                divisionHeader.scrollIntoView({ behavior: "smooth", block: "center" });
+                                divisionDiv.scrollIntoView({ behavior: "smooth", block: "start" });
                             }
                         }
                     }, 100);

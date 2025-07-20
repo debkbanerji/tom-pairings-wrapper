@@ -134,16 +134,17 @@ a {
 
 .division>h2 {
     text-align: center;
-    margin-top: 0.5em;
+    padding-top: 0.5em;
+    margin-top: 0;
     margin-bottom: 0.5em;
     margin-left: 30px;
 }
 
 .division {
-    margin-bottom: 25px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-bottom: 10px;
 }
 
 .player-name-container {
@@ -160,7 +161,7 @@ a {
     white-space: nowrap;
     overflow: hidden;
     flex-grow: 0;
-    max-width: 29vw;
+    max-width: 27vw;
 }
 
 .player-name-left::first-letter {
@@ -227,6 +228,18 @@ tbody tr:nth-child(odd) {
 
 table>tbody>tr {
     border-bottom: 1px solid #cccccc;
+}
+
+.highlighted-row {
+    background-color: #fff0f1 !important;
+}
+
+.pin-button {
+    cursor: pointer;
+    font-size: 0.9em;
+    border: none;
+    background-color: transparent;
+    padding-left: 0;
 }
 
 table>tbody>tr:last-child>td {
