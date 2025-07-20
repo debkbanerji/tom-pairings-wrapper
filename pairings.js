@@ -80,7 +80,21 @@ function extractPairingsAndPopulatePage() {
                     const divisionDiv = document.createElement("div");
                     divisionDiv.classList.add("division");
                     const divisionHeader = document.createElement("h2");
-                    divisionHeader.innerText = division.name;
+                    divisionHeader.innerHTML = division.name;
+
+                    // Create a reload button for this division
+                    const divisionReloadButton = document.createElement("button");
+                    divisionReloadButton.classList.add("division-reload-button");
+                    divisionReloadButton.innerHTML = "&#x21bb;";
+                    // divisionReloadButton.title = "Reload this division";
+                    divisionReloadButton.onclick = (e) => {
+                        history.replaceState(null, null, '#' + division.name.replace(/\s+/g, '-').toLowerCase());
+                        extractPairingsAndPopulatePage();
+                    };
+
+                    divisionHeader.appendChild(divisionReloadButton);
+
+
                     divisionDiv.appendChild(divisionHeader);
 
                     // add a shortcut button to the divisions shortcut buttons container

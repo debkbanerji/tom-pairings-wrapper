@@ -93,7 +93,9 @@ a {
 }
 
 .division-shortcut-button,
-.reload-button {
+.reload-button,
+.division-reload-button
+{
     margin-left: 5px;
     margin-right: 5px;
     background: #fff;
@@ -122,6 +124,12 @@ a {
         border-color: #f6647a;
         box-shadow: 0 1px 3px rgba(250, 66, 81, 0.10), 0 1px 4px rgba(0, 0, 0, 0.08);
     }
+}
+
+.division-reload-button {
+    font-size: 0.8em;
+    padding: 4px 10px;
+    margin-left: 10px;
 }
 
 .division>h2 {
