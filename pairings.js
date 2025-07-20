@@ -27,6 +27,10 @@ function extractPairingsAndPopulatePage() {
                 const parser = new DOMParser();
                 const doc = parser.parseFromString(html, "text/html");
 
+                // Get pinned player from query string if present
+                const urlParams = new URLSearchParams(window.location.search);
+                const pinnedPlayer = urlParams.get("player");
+
                 // the 'footers' are td elements with class 'footer'
                 const rawFooterData = Array.from(doc.querySelectorAll("td.footer")).map(td => td.innerText.trim());
 
@@ -67,11 +71,22 @@ function extractPairingsAndPopulatePage() {
                         text.toLowerCase().includes("division")
                     );
 
+
                 // combine the tables and division names into a single array
                 const divisions = [];
                 for (let i = 0; i < Math.max(divisionHeaders.length, parsedTables.length); i++) {
                     const divisionName = divisionHeaders[i] || `Division ${i + 1}`;
                     const table = parsedTables[i] || [];
+                    // sort the table by pinned player first, then by name
+                    const pinnedPlayerLower = (pinnedPlayer ?? '').toLowerCase();
+                    table.sort((a, b) => {
+                        const aIsPinned = a["Name"].toLowerCase().includes(pinnedPlayerLower);
+                        const bIsPinned = b["Name"].toLowerCase().includes(pinnedPlayerLower);
+                        if (aIsPinned && !bIsPinned) return -1;
+                        if (!aIsPinned && bIsPinned) return 1;
+                        // if both are pinned or both are not pinned, sort by name
+                        return (a["Name"] || "").localeCompare(b["Name"] || "");
+                    });
                     divisions.push({ name: divisionName, pairings: table });
                 }
 
@@ -93,7 +108,6 @@ function extractPairingsAndPopulatePage() {
                     };
 
                     divisionHeader.appendChild(divisionReloadButton);
-
 
                     divisionDiv.appendChild(divisionHeader);
 
@@ -123,6 +137,10 @@ function extractPairingsAndPopulatePage() {
                     const tbody = document.createElement("tbody");
                     division.pairings.forEach((pairing) => {
                         const row = document.createElement("tr");
+                        // if the pairing has a 'Name' that matches the pinned player, highlight the row
+                        if (pairing["Name"].toLowerCase().includes((pinnedPlayer ?? '').toLowerCase())) {
+                            row.classList.add("highlighted-row");
+                        }
                         if (!rosterMode) {
                             const tableCell = document.createElement("td");
                             tableCell.innerText = pairing["Table"] || "";
@@ -190,7 +208,7 @@ function extractPairingsAndPopulatePage() {
                         if (window.location.hash) {
                             const hash = window.location.hash.substring(1);
                             if (division.name.replace(/\s+/g, '-').toLowerCase() === hash) {
-                                divisionHeader.scrollIntoView({ behavior: "smooth", block: "start" });
+                                divisionHeader.scrollIntoView({ behavior: "smooth", block: "center" });
                             }
                         }
                     }, 100);
