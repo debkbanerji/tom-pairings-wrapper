@@ -1,7 +1,7 @@
 // Extracts the pairings from the pairings.html file, and repackages them into the fancier pairings.html
 function extractPairingsAndPopulatePage() {
     const cacheBuster = `cb=${Date.now()}`;
-    fetch(`pairings-data/index.html?${cacheBuster}`)
+    fetch(`tom-pairings.html?${cacheBuster}`)
         .then((response) => response.text())
         .then((html) => {
             try {
@@ -101,7 +101,6 @@ function extractPairingsAndPopulatePage() {
                     const divisionReloadButton = document.createElement("button");
                     divisionReloadButton.classList.add("division-reload-button");
                     divisionReloadButton.innerHTML = "&#x21bb;";
-                    // divisionReloadButton.title = "Reload this division";
                     divisionReloadButton.onclick = (e) => {
                         history.replaceState(null, null, '#' + division.name.replace(/\s+/g, '-').toLowerCase());
                         extractPairingsAndPopulatePage();
