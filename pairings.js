@@ -169,6 +169,14 @@ function extractPairingsAndPopulatePage() {
                         if (standingsMode) {
                             const standingCell = document.createElement("td");
                             standingCell.innerText = pairing["Standing"] || "";
+                            if (pairing["Standing"] == 1) {
+                                standingCell.style.color = "#C9B037";
+                            } else if (pairing["Standing"] == 2) {
+                                standingCell.style.color = "#A9A9A9";
+                            } else if (pairing["Standing"] == 3) {
+                                standingCell.style.color = "#CD7F32"; 
+                            }
+                            standingCell.style.fontWeight = "bold";
                             row.appendChild(standingCell);
                         }
                         const nameCell = document.createElement("td");
