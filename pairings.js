@@ -1,3 +1,5 @@
+const divisionNameRegex = /.*(divisions|division|junior|senior|master|all).*/i;
+
 // Extracts the pairings from the pairings.html file, and repackages them into the fancier pairings.html
 function extractPairingsAndPopulatePage() {
     const cacheBuster = `cb=${Date.now()}`;
@@ -67,8 +69,8 @@ function extractPairingsAndPopulatePage() {
                 // now, find the division names
                 // These are in h3 tags, and contain 'Division' in the text
                 const divisionHeaders = Array.from(doc.querySelectorAll("h3"))
-                    .map(h3 => h3.innerText.replace('--', '-').replace("ivisions", "ivision")).filter((text) =>
-                        text.toLowerCase().includes("division")
+                    .map(h3 => h3.innerText.replace('--', '-')).filter((text) =>
+                        text.toLowerCase().match(divisionNameRegex)
                     );
 
 
