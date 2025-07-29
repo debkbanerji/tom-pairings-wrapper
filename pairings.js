@@ -78,7 +78,7 @@ function extractPairingsAndPopulatePage() {
                 const divisionHeaders = Array.from(doc.querySelectorAll(standingsMode ? "h2" : "h3"))
                     .map(h3 => h3.innerText.replace('--', '-')).filter((text) =>
                         text.toLowerCase().match(divisionNameRegex)
-                    ).map((text) =>  text.replace(' Entered', '')); // save some space
+                    ).map((text) => text.replace(' Entered', '')); // save some space
 
 
                 // combine the tables and division names into a single array
@@ -315,19 +315,20 @@ function pairingsTableToJSON(table) {
             let recordData = null;
             // TODO: Take care of the ' - SR' at the end for mixed divisions
             // TODO: Take care of the * at the end for tardiness
-            const match = rawText.match(/^(.*?)(?:\s*\((\d+)\/(\d+)\/(\d+)\s*\((\d+)\).*\)).*?$/);
+            const match = rawText.match(/^(.*?)(?:\s*(\(|)(\d+)\/(\d+)\/(\d+)\s*\((\d+)\).*(\)|)).*?$/);
+
             if (match) {
                 value = match[1].trim();
                 recordData = {};
-                if (match[2] !== undefined) recordData["wins"] = parseInt(match[2], 10);
-                if (match[3] !== undefined) recordData["losses"] = parseInt(match[3], 10);
-                if (match[4] !== undefined) recordData["ties"] = parseInt(match[4], 10);
-                if (match[5] !== undefined) recordData["points"] = parseInt(match[5], 10);
+                if (match[3] !== undefined) recordData["wins"] = parseInt(match[3], 10);
+                if (match[4] !== undefined) recordData["losses"] = parseInt(match[4], 10);
+                if (match[5] !== undefined) recordData["ties"] = parseInt(match[5], 10);
+                if (match[6] !== undefined) recordData["points"] = parseInt(match[6], 10);
             } else {
                 value = rawText; // fallback to just the raw text
             }
             obj[headers[index]] = value;
-            if (headers[index].toLowerCase().trim() === "name" && recordData) {
+            if (headers[index].toLowerCase().trim() === "name" || headers[index].toLowerCase().trim() === "matchrecord" && recordData) {
                 obj["playerRecord"] = recordData;
             } else if (headers[index].toLowerCase().trim() === "opponent" && recordData) {
                 obj["opponentRecord"] = recordData;
