@@ -1,10 +1,10 @@
 # TOM Pairings Wrapper
-Static pairings wrapper for TOM - aims to improve the user experience of pairings while allowing you to continue hosting pairings yourself
+Pairings wrapper for TOM - aims to improve the user experience of pairings while allowing you to continue hosting pairings yourself.
 
-This documentation assumes you know how to host a static site
+Given these are static assets you do not need to upload any data to a third party. This documentation assumes you are already hosting pairings yourself, or you know how to host a static site. 
 
 ## Warning
-**Please be careful!** As of the time of writing, this is the product of just a few hours of eng time and no user testing. If you do decide to use this anyway, let me know about any bugs you may find. I'll remove this warning once I've had a time to test this properly.
+**Please be careful!** As of the time of writing, this is not as thoroughly tested as I'd like it to be.  I'm not responsible for any issues you might run into, but if you do decide to use this anyway, let me know about any bugs you find so I can fix them.
 
 ## How to use
 
@@ -12,6 +12,7 @@ This documentation assumes you know how to host a static site
 - Add a link to the `pairings.html` page wherever you'd like (somewhere else within your own site, on a QR code, etc.)
 - Replace `logo.png` with your own file named `logo.png` if you want your own logo
 - Replace the example `tom-pairings.html` file with the pairings/roster file produced by TOM - make sure the name matches!
+    - Do **not** upload the `.tdf` file anywhere within the folder (or anywhere on your site, even if you're not using this wrapper). The wrapper is designed to operate with just the `.html` file to avoid any data security issues.
 - Any time you need to update the pairings/roster, replace the `tom-pairings.html` file with the new one
 - If something breaks, you can update your core link to point directly to `tom-pairings.html`, or just replace `pairings.html` outright with the TOM output file
 
