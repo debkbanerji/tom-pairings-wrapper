@@ -4,7 +4,9 @@ Pairings wrapper for TOM - aims to improve the user experience of pairings while
 Given these are static assets you do not need to upload any data to a third party. This documentation assumes you are already hosting pairings yourself, or you know how to host a static site. 
 
 ## Warning
-**Please be careful!** As of the time of writing, this is not as thoroughly tested as I'd like it to be.  I'm not responsible for any issues you might run into, but if you do decide to use this anyway, let me know about any bugs you find so I can fix them.
+This software has been tested on TOM outputs, but if there are format changes, behaviors may change. In this case, please be prepared to serve the raw TOM output instead. I'm not responsible for any issues you might run into.
+
+That being said, please let me know about any bugs you find so I can fix them!
 
 ## How to use
 
